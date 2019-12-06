@@ -17,6 +17,7 @@ hbs.registerPartials(partialsPath)
 // Setup static directory to serve
 app.use(express.static(publicDirectoryPath))
 
+// not workin on web-server-nodejs.pwojczyn.com 
 // app.get('', (req, res) => {
 //     res.render('index', {
 //         title: 'Weather',
