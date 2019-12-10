@@ -21,7 +21,7 @@ app.use(express.static(publicDirectoryPath))
 // app.get('', (req, res) => {
 //     res.render('index', {
 //         title: 'Weather',
-//         name: 'Andrew Mead'
+//         name: 'pwojczyn'
 //     })
 // })
 
@@ -41,9 +41,30 @@ app.get('/help', (req, res) => {
 })
 
 app.get('/weather', (req, res) => {
+    if (!req.query.address) {
+        return res.send({
+            error: 'You must provide an address!'
+        })
+    }
+
     res.send({
         forecast: 'It is snowing',
-        location: 'Philadelphia'
+        location: 'Philadelphia',
+        address: req.query.address
+    })
+})
+
+app.get('/products', (req, res) => {
+    if (!req.query.search) {
+        return res.send({
+            error: 'You must provide a search term'
+        })
+    }
+
+    console.log(req.query.search)
+    // random data
+    res.send({
+        products: ['ipad', 'iphone', 'tablet']
     })
 })
 
