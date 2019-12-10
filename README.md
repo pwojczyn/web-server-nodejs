@@ -3,4 +3,6 @@
 It is Weather App on web server.
 
 Demo #1: http://web-server-nodejs.pwojczyn.com
-Demo #2: https://web-server-nodejs.pwojczyn.repl.co
+
+
+[![Run on Repl.it](https://repl.it/badge/github/pwojczyn/web-server-nodejs)](https://repl.it/github/pwojczyn/web-server-nodejs)
