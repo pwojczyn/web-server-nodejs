@@ -1,6 +1,8 @@
 const path = require('path')
 const express = require('express')
 const hbs = require('hbs')
+const geocode = require('./utils/geocode')
+const forecast = require('./utils/forecast')
 
 const app = express()
 
@@ -17,13 +19,12 @@ hbs.registerPartials(partialsPath)
 // Setup static directory to serve
 app.use(express.static(publicDirectoryPath))
 
-// not working on web-server-nodejs.pwojczyn.com 
-// app.get('', (req, res) => {
-//     res.render('index', {
-//         title: 'Weather',
-//         name: 'pwojczyn'
-//     })
-// })
+app.get('', (req, res) => {
+    res.render('index', {
+        title: 'Weather',
+        name: 'pwojczyn'
+    })
+})
 
 app.get('/about', (req, res) => {
     res.render('about', {
@@ -47,10 +48,30 @@ app.get('/weather', (req, res) => {
         })
     }
 
-    res.send({
-        forecast: 'It is snowing',
-        location: 'Philadelphia',
-        address: req.query.address
+    geocode(req.query.address, (error, {
+        latitude,
+        longitude,
+        location
+    }) => {
+        if (error) {
+            return res.send({
+                error
+            })
+        }
+
+        forecast(latitude, longitude, (error, forecastData) => {
+            if (error) {
+                return res.send({
+                    error
+                })
+            }
+
+            res.send({
+                forecast: forecastData,
+                location,
+                address: req.query.address
+            })
+        })
     })
 })
 
